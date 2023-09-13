@@ -32,7 +32,7 @@ def extract_title_and_content(file_path):
 
         return title.strip(), content.strip()
 
-def process_file(input_file):
+def process_file(input_file,stylesheet_url):
     output_file = os.path.join('txtToWeb', os.path.splitext(os.path.basename(input_file))[0] + ".html")
     title, content = extract_title_and_content(input_file)
     with open(input_file, "r") as txt_file, open(output_file, "w") as html_file:
@@ -43,6 +43,8 @@ def process_file(input_file):
         if title:
             html_file.write(f"  <title>{title}</title>\n")
         html_file.write("  <meta name='viewport' content='width=device-width, initial-scale=1'>\n")
+        if stylesheet_url:
+            html_file.write(f"  <link rel='stylesheet' type='text/css' href='{stylesheet_url}'>\n")
         
         html_file.write("</head>\n")
         html_file.write("<body>\n")
@@ -57,12 +59,12 @@ def process_file(input_file):
         html_file.write("</body>\n")
         html_file.write("</html>\n")
 
-def process_folder(folder_path):
+def process_folder(folder_path,stylesheet_url):
     for root, _, files in os.walk(folder_path):
         for file in files:
             if file.endswith(".txt"):
                 file_path = os.path.join(root, file)
-                process_file(file_path)
+                process_file(file_path,stylesheet_url)
 
 def main():
     if not os.path.exists('txtToWeb'):
@@ -86,14 +88,20 @@ def main():
         version=VERSION,
         help="Show the tool's version",
     )
+    parser.add_argument(
+        "--stylesheet",
+        "-s",
+        help="URL to a CSS stylesheet to be used in the HTML files",
+    )
 
     args = parser.parse_args()
     input_path = args.input_path
+    stylesheet_url = args.stylesheet
 
     if os.path.isfile(input_path):
-        process_file(input_path)
+        process_file(input_path,stylesheet_url)
     elif os.path.isdir(input_path):
-        process_folder(input_path)
+        process_folder(input_path,stylesheet_url)
     else:
         print("Invalid input path. Please provide a valid file or folder path.")
 
