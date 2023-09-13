@@ -51,9 +51,9 @@ To convert all .txt files in a directory and include a CSS stylesheet:
 
 ### Flags
 
-*`--version` or `-v`: Display the tool's version.
-*`--stylesheet` or `-s`: Specify a URL to a CSS stylesheet to include in the HTML files.
-*`--help` or `-h`: Display usage information and available flags.
+* `--version` or `-v`: Display the tool's version.
+* `--stylesheet` or `-s`: Specify a URL to a CSS stylesheet to include in the HTML files.
+* `--help` or `-h`: Display usage information and available flags.
 
 ### Output
 
