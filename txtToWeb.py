@@ -7,9 +7,6 @@ import os
 VERSION = "txtToWeb v0.1"
 
 def process_file(input_file):
-    # Create a directory named 'txtToWeb' if it doesn't exist
-    if not os.path.exists('txtToWeb'):
-        os.makedirs('txtToWeb')
     output_file = os.path.join('txtToWeb', os.path.splitext(os.path.basename(input_file))[0] + ".html")
 
     with open(input_file, "r") as txt_file, open(output_file, "w") as html_file:
@@ -38,6 +35,18 @@ def process_folder(folder_path):
                 process_file(file_path)
 
 def main():
+    if not os.path.exists('txtToWeb'):
+        os.makedirs('txtToWeb')
+
+    # Remove existing content from 'txtToWeb' folder
+    for filename in os.listdir('txtToWeb'):
+        file_path = os.path.join('txtToWeb', filename)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+        except Exception as e:
+            print(e)
+
     parser = argparse.ArgumentParser(description="txtToWeb - Convert Text to Web Content")
     parser.add_argument("input_path", help="File or folder path to process")
     parser.add_argument(
