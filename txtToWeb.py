@@ -6,23 +6,53 @@ import os
 # Define the tool's version
 VERSION = "txtToWeb v0.1"
 
+def extract_title_and_content(file_path):
+    with open(file_path, "r") as txt_file:
+        lines = txt_file.readlines()
+
+        title = ""
+        content = ""
+
+        # Check if there is at least one line in the file
+        if lines:
+            # Check the first line
+            first_line = lines[0].strip()
+
+            # Check the next two lines if they exist
+            if len(lines) > 2 and not lines[1].strip() and not lines[2].strip():
+                # If the first line is not empty, consider it a title
+                if first_line:
+                    title = first_line
+                # Read the rest of the lines as content
+                content = "".join(lines[3:])
+            else:
+                content = "".join(lines)
+        else:
+            pass
+
+        return title.strip(), content.strip()
+
 def process_file(input_file):
     output_file = os.path.join('txtToWeb', os.path.splitext(os.path.basename(input_file))[0] + ".html")
-
+    title, content = extract_title_and_content(input_file)
     with open(input_file, "r") as txt_file, open(output_file, "w") as html_file:
         html_file.write("<!doctype html>\n")
         html_file.write("<html lang='en'>\n")
         html_file.write("<head>\n")
         html_file.write("  <meta charset='utf-8'>\n")
-        html_file.write(f"  <title>{os.path.basename(input_file)}</title>\n")
+        if title:
+            html_file.write(f"  <title>{title}</title>\n")
         html_file.write("  <meta name='viewport' content='width=device-width, initial-scale=1'>\n")
+        
         html_file.write("</head>\n")
         html_file.write("<body>\n")
-        
-        paragraphs = txt_file.read().split('\n\n')
+        if title:
+            html_file.write(f"  <h1>{title}</h1>\n")
+        paragraphs = content.split('\n\n')
 
-        for paragraph in paragraphs:
-            html_file.write(f"  <p>{paragraph}</p>\n")
+        if content:
+            for paragraph in paragraphs:
+                html_file.write(f"  <p>{paragraph}</p>\n")
 
         html_file.write("</body>\n")
         html_file.write("</html>\n")
