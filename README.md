@@ -65,7 +65,9 @@ Command:
 ```
 Sample Input: [test.txt](examples/test.txt)
 
-Output: [test.html](examples/txtToWeb/test.html) 
+Output: [test.html](examples/txtToWeb/test.html)
+
+Output Hosted: [https://txttoweb.netlify.app/](https://txttoweb.netlify.app/)
 
 ### License
 This project is licensed under the GNU General Public License v3.0 License - see the [LICENSE](LICENSE) file for details.
