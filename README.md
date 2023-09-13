@@ -58,14 +58,14 @@ To convert all .txt files in a directory and include a CSS stylesheet:
 
 By default, the tool generates HTML files in a txtToWeb directory in the current working directory. Each HTML file corresponds to a processed text file, with the original filename.
 
-### Examples
+### Example
 Command:
 ```bash
 ./txtToWeb.py -s https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/tufte.min.css test.txt
 ```
 Sample Input: [test.txt](examples/test.txt)
 
-Output:[test.html](examples/txtToWeb/test.html) 
+Output: [test.html](examples/txtToWeb/test.html) 
 
 ### License
 This project is licensed under the GNU General Public License v3.0 License - see the [LICENSE](LICENSE) file for details.
