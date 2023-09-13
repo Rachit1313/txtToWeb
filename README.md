@@ -33,3 +33,32 @@ To convert a single text file to HTML:
 ```bash
     ./txtToWeb.py <filename>
 ```
+
+To add a stylesheet to the file:
+```bash
+    ./txtToWeb.py -s https://example.com/style.css <filename> 
+```
+
+To convert all .txt files in a directory:
+```bash
+txtToWeb.py /path/to/directory
+```
+
+To convert all .txt files in a directory and include a CSS stylesheet:
+```bash
+    ./txtToWeb.py -s https://example.com/style.css /path/to/directory
+```
+
+### Flags
+
+*`--version` or `-v`: Display the tool's version.
+*`--stylesheet` or `-s`: Specify a URL to a CSS stylesheet to include in the HTML files.
+*`--help` or `-h`: Display usage information and available flags.
+
+### Output
+
+By default, the tool generates HTML files in a txtToWeb directory in the current working directory. Each HTML file corresponds to a processed text file, with the original filename.
+
+### Examples
+
+### License
