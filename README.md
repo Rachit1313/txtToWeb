@@ -30,6 +30,6 @@
 ### Basic Usage
 
 To convert a single text file to HTML:
-   ```bash
+```bash
     ./txtToWeb.py <filename>
-    ```
+```
