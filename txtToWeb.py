@@ -6,9 +6,29 @@ import os
 # Define the tool's version
 VERSION = "txtToWeb v0.1"
 
-def process_file(file_path):
-    # Replace this logic with your actual processing code for a single file.
-    print(f"Processing file: {file_path}")
+def process_file(input_file):
+    # Create a directory named 'txtToWeb' if it doesn't exist
+    if not os.path.exists('txtToWeb'):
+        os.makedirs('txtToWeb')
+    output_file = os.path.join('txtToWeb', os.path.splitext(os.path.basename(input_file))[0] + ".html")
+
+    with open(input_file, "r") as txt_file, open(output_file, "w") as html_file:
+        html_file.write("<!doctype html>\n")
+        html_file.write("<html lang='en'>\n")
+        html_file.write("<head>\n")
+        html_file.write("  <meta charset='utf-8'>\n")
+        html_file.write(f"  <title>{os.path.basename(input_file)}</title>\n")
+        html_file.write("  <meta name='viewport' content='width=device-width, initial-scale=1'>\n")
+        html_file.write("</head>\n")
+        html_file.write("<body>\n")
+        
+        paragraphs = txt_file.read().split('\n\n')
+
+        for paragraph in paragraphs:
+            html_file.write(f"  <p>{paragraph}</p>\n")
+
+        html_file.write("</body>\n")
+        html_file.write("</html>\n")
 
 def process_folder(folder_path):
     for root, _, files in os.walk(folder_path):
