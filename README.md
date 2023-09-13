@@ -14,29 +14,28 @@
 ### Installation
 
 1. Clone this repository to your local machine:
-
-   ```bash
+```bash
    git clone https://github.com/your-username/txtToWeb.git
-   ```
+```
 2. Navigate to the txtToWeb directory:
-   ```bash
+```bash
    cd txtToWeb
-   ```
+```
 3. Make it executable
-    ```bash
+```bash
     chmod +x txtToWeb.py
-    ```
+```
 
 ### Basic Usage
 
 To convert a single text file to HTML:
 ```bash
-    ./txtToWeb.py <filename>
+./txtToWeb.py <filename>
 ```
 
 To add a stylesheet to the file:
 ```bash
-    ./txtToWeb.py -s https://example.com/style.css <filename> 
+./txtToWeb.py -s https://example.com/style.css <filename> 
 ```
 
 To convert all .txt files in a directory:
@@ -46,7 +45,7 @@ txtToWeb.py /path/to/directory
 
 To convert all .txt files in a directory and include a CSS stylesheet:
 ```bash
-    ./txtToWeb.py -s https://example.com/style.css /path/to/directory
+./txtToWeb.py -s https://example.com/style.css /path/to/directory
 ```
 
 ### Flags
@@ -62,9 +61,10 @@ By default, the tool generates HTML files in a txtToWeb directory in the current
 ### Examples
 Command:
 ```bash
-    ./txtToWeb.py -s https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/tufte.min.css test.txt
+./txtToWeb.py -s https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/tufte.min.css test.txt
 ```
 Sample Input: [test.txt](examples/test.txt)
+
 Output:[test.html](examples/txtToWeb/test.html) 
 
 ### License
