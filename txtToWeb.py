@@ -54,7 +54,8 @@ def process_file(input_file,stylesheet_url):
 
         if content:
             for paragraph in paragraphs:
-                html_file.write(f"  <p>{paragraph}</p>\n")
+                if paragraph.strip():  # Check if the paragraph has content
+                    html_file.write(f"  <p>{paragraph}</p>\n")
 
         html_file.write("</body>\n")
         html_file.write("</html>\n")
