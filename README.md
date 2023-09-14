@@ -11,6 +11,10 @@
 
 ## Usage
 
+### Requirements
+1. bash/zsh/wsl Terminal
+2. Python
+
 ### Installation
 
 1. Clone this repository to your local machine:
