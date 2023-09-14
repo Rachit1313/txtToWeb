@@ -33,7 +33,7 @@ def extract_title_and_content(file_path):
         return title.strip(), content.strip()
 
 def process_file(input_file,stylesheet_url):
-    output_file = os.path.join('txtToWeb', os.path.splitext(os.path.basename(input_file))[0] + ".html")
+    output_file = os.path.join('til', os.path.splitext(os.path.basename(input_file))[0] + ".html")
     title, content = extract_title_and_content(input_file)
     with open(input_file, "r") as txt_file, open(output_file, "w") as html_file:
         html_file.write("<!doctype html>\n")
@@ -68,12 +68,12 @@ def process_folder(folder_path,stylesheet_url):
                 process_file(file_path,stylesheet_url)
 
 def main():
-    if not os.path.exists('txtToWeb'):
-        os.makedirs('txtToWeb')
+    if not os.path.exists('til'):
+        os.makedirs('til')
 
-    # Remove existing content from 'txtToWeb' folder
-    for filename in os.listdir('txtToWeb'):
-        file_path = os.path.join('txtToWeb', filename)
+    # Remove existing content from 'til' folder
+    for filename in os.listdir('til'):
+        file_path = os.path.join('til', filename)
         try:
             if os.path.isfile(file_path):
                 os.unlink(file_path)
