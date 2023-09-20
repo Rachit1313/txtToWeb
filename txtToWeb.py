@@ -2,6 +2,7 @@
 
 import argparse
 import os
+import shutil
 
 # Define the tool's version
 VERSION = "txtToWeb v0.1"
@@ -35,7 +36,7 @@ def extract_title_and_content(file_path):
 def process_file(input_file,stylesheet_url):
     output_file = os.path.join('til', os.path.splitext(os.path.basename(input_file))[0] + ".html")
     title, content = extract_title_and_content(input_file)
-    with open(input_file, "r") as txt_file, open(output_file, "w") as html_file:
+    with open(output_file, "w") as html_file:
         html_file.write("<!doctype html>\n")
         html_file.write("<html lang='en'>\n")
         html_file.write("<head>\n")
@@ -61,25 +62,16 @@ def process_file(input_file,stylesheet_url):
         html_file.write("</html>\n")
 
 def process_folder(folder_path,stylesheet_url):
+    if os.path.exists('til'):
+        shutil.rmtree('til')
+        os.makedirs('til')
     for root, _, files in os.walk(folder_path):
         for file in files:
             if file.endswith(".txt"):
                 file_path = os.path.join(root, file)
                 process_file(file_path,stylesheet_url)
 
-def main():
-    if not os.path.exists('til'):
-        os.makedirs('til')
-
-    # Remove existing content from 'til' folder
-    for filename in os.listdir('til'):
-        file_path = os.path.join('til', filename)
-        try:
-            if os.path.isfile(file_path):
-                os.unlink(file_path)
-        except Exception as e:
-            print(e)
-
+def main():    
     parser = argparse.ArgumentParser(description="txtToWeb - Convert Text to Web Content")
     parser.add_argument("input_path", help="File or folder path to process")
     parser.add_argument(
@@ -99,7 +91,10 @@ def main():
     input_path = args.input_path
     stylesheet_url = args.stylesheet
 
-    if os.path.isfile(input_path):
+    if os.path.isfile(input_path) and input_path.endswith(".txt") :
+        if os.path.exists('til'):
+            shutil.rmtree('til')
+        os.makedirs('til')
         process_file(input_path,stylesheet_url)
     elif os.path.isdir(input_path):
         process_folder(input_path,stylesheet_url)
