@@ -3,6 +3,7 @@
 import argparse
 import os
 import shutil
+import re
 
 # Define the tool's version
 VERSION = "txtToWeb v0.1"
@@ -51,7 +52,7 @@ def process_file(input_file,stylesheet_url):
         html_file.write("<body>\n")
         if title:
             html_file.write(f"  <h1>{title}</h1>\n")
-        paragraphs = content.split('\n\n')
+        paragraphs = re.split(r'\r?\n\r?\n',content)
 
         if content:
             for paragraph in paragraphs:
