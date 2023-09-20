@@ -64,7 +64,7 @@ def process_file(input_file,stylesheet_url):
 def process_folder(folder_path,stylesheet_url):
     if os.path.exists('til'):
         shutil.rmtree('til')
-        os.makedirs('til')
+    os.makedirs('til')
     for root, _, files in os.walk(folder_path):
         for file in files:
             if file.endswith(".txt"):
