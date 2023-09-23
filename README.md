@@ -4,8 +4,9 @@
 
 ## Features
 
-- Convert text files to valid HTML5 documents.
+- Convert text and Markdown files to valid HTML5 documents.
 - Automatically detect titles and format content into paragraphs.
+- Parse Markdown syntax for Italics and convert it to HTML.
 - Optionally include a CSS stylesheet in the HTML output.
 - Process individual files or entire directories of text files.
 
@@ -42,12 +43,14 @@ To add a stylesheet to the file:
 ./txtToWeb.py -s https://example.com/style.css <filename> 
 ```
 
-To convert all .txt files in a directory:
+To convert all .txt and .md files in a directory:
 ```bash
 txtToWeb.py /path/to/directory
 ```
 
-To convert all .txt files in a directory and include a CSS stylesheet:
+
+
+To convert all .txt and .md files in a directory and include a CSS stylesheet:
 ```bash
 ./txtToWeb.py -s https://example.com/style.css /path/to/directory
 ```
@@ -57,6 +60,10 @@ To convert all .txt files in a directory and include a CSS stylesheet:
 * `--version` or `-v`: Display the tool's version.
 * `--stylesheet` or `-s`: Specify a URL to a CSS stylesheet to include in the HTML files.
 * `--help` or `-h`: Display usage information and available flags.
+
+### Markdown Support
+
+The tool provides initial support for Markdown files. Currently, it can parse and convert the Italic syntax from Markdown to HTML.
 
 ### Output
 
