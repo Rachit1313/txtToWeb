@@ -2,7 +2,7 @@
 
 This is a _sample_ Markdown file for testing.
 
-Here is another paragraph with some _italic_ text.
+Here is another paragraph with some *italic* text.
 
 ## Subheading
 

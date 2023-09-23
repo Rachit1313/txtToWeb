@@ -61,9 +61,29 @@ To convert all .txt and .md files in a directory and include a CSS stylesheet:
 * `--stylesheet` or `-s`: Specify a URL to a CSS stylesheet to include in the HTML files.
 * `--help` or `-h`: Display usage information and available flags.
 
-### Markdown Support
 
-The tool provides initial support for Markdown files. Currently, it can parse and convert the Italic syntax from Markdown to HTML.
+## Markdown Support
+
+As of the latest update, `txtToWeb` has incorporated support for converting Markdown `.md` files in addition to plain text files. This introduces the capability to parse specific Markdown syntax and convert it to valid HTML5 format, allowing for enhanced content structuring and formatting.
+
+### Italic Syntax
+
+The initial release of Markdown support focuses on the Italic syntax. Users can now write text in Italics in their Markdown files, and `txtToWeb` will correctly convert it into HTML. The Italic text can be written by wrapping the desired text segment with either single asterisks `*` or single underscores `_`.
+
+#### Usage Example:
+
+Markdown Input:
+```markdown
+This is an *italic* example.
+And this is another _italic_ example.
+```
+
+Generated HTML Output:
+
+```html
+<p>This is an <i>italic</i> example.</p>
+<p>And this is another <i>italic</i> example.</p>
+```
 
 ### Output
 

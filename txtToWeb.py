@@ -10,7 +10,7 @@ VERSION = "txtToWeb v0.1"
 
 def md_to_html(content):
     # Convert Markdown italic syntax to HTML
-    content = re.sub(r"_([^_]*)_", r"<i>\1</i>", content)
+    content = re.sub(r"([*_])([^*_]*)(\1)", r"<i>\2</i>", content)
     return content
 
 
