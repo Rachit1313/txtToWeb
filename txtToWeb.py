@@ -8,6 +8,12 @@ import re
 # Define the tool's version
 VERSION = "txtToWeb v0.1"
 
+def md_to_html(content):
+    # Convert Markdown italic syntax to HTML
+    content = re.sub(r"([*_])([^*_]*)(\1)", r"<i>\2</i>", content)
+    return content
+
+
 def extract_title_and_content(file_path):
     with open(file_path, "r") as txt_file:
         lines = txt_file.readlines()
@@ -15,22 +21,25 @@ def extract_title_and_content(file_path):
         title = ""
         content = ""
 
-        # Check if there is at least one line in the file
-        if lines:
-            # Check the first line
-            first_line = lines[0].strip()
-
-            # Check the next two lines if they exist
-            if len(lines) > 2 and not lines[1].strip() and not lines[2].strip():
-                # If the first line is not empty, consider it a title
-                if first_line:
-                    title = first_line
-                # Read the rest of the lines as content
-                content = "".join(lines[3:])
-            else:
-                content = "".join(lines)
+        if file_path.endswith('.md'):
+            content = md_to_html("".join(lines))
         else:
-            pass
+            # Check if there is at least one line in the file
+            if lines:
+                # Check the first line
+                first_line = lines[0].strip()
+
+                # Check the next two lines if they exist
+                if len(lines) > 2 and not lines[1].strip() and not lines[2].strip():
+                    # If the first line is not empty, consider it a title
+                    if first_line:
+                        title = first_line
+                    # Read the rest of the lines as content
+                    content = "".join(lines[3:])
+                else:
+                    content = "".join(lines)
+            else:
+                pass
 
         return title.strip(), content.strip()
 
@@ -68,7 +77,7 @@ def process_folder(folder_path,stylesheet_url):
     os.makedirs('til')
     for root, _, files in os.walk(folder_path):
         for file in files:
-            if file.endswith(".txt"):
+            if file.endswith(".txt") or file.endswith(".md"):
                 file_path = os.path.join(root, file)
                 process_file(file_path,stylesheet_url)
 
@@ -92,7 +101,7 @@ def main():
     input_path = args.input_path
     stylesheet_url = args.stylesheet
 
-    if os.path.isfile(input_path) and input_path.endswith(".txt") :
+    if os.path.isfile(input_path) and (input_path.endswith(".txt") or input_path.endswith(".md")) :
         if os.path.exists('til'):
             shutil.rmtree('til')
         os.makedirs('til')

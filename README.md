@@ -4,8 +4,9 @@
 
 ## Features
 
-- Convert text files to valid HTML5 documents.
+- Convert text and Markdown files to valid HTML5 documents.
 - Automatically detect titles and format content into paragraphs.
+- Parse Markdown syntax for Italics and convert it to HTML.
 - Optionally include a CSS stylesheet in the HTML output.
 - Process individual files or entire directories of text files.
 
@@ -42,12 +43,14 @@ To add a stylesheet to the file:
 ./txtToWeb.py -s https://example.com/style.css <filename> 
 ```
 
-To convert all .txt files in a directory:
+To convert all .txt and .md files in a directory:
 ```bash
 txtToWeb.py /path/to/directory
 ```
 
-To convert all .txt files in a directory and include a CSS stylesheet:
+
+
+To convert all .txt and .md files in a directory and include a CSS stylesheet:
 ```bash
 ./txtToWeb.py -s https://example.com/style.css /path/to/directory
 ```
@@ -57,6 +60,30 @@ To convert all .txt files in a directory and include a CSS stylesheet:
 * `--version` or `-v`: Display the tool's version.
 * `--stylesheet` or `-s`: Specify a URL to a CSS stylesheet to include in the HTML files.
 * `--help` or `-h`: Display usage information and available flags.
+
+
+## Markdown Support
+
+As of the latest update, `txtToWeb` has incorporated support for converting Markdown `.md` files in addition to plain text files. This introduces the capability to parse specific Markdown syntax and convert it to valid HTML5 format, allowing for enhanced content structuring and formatting.
+
+### Italic Syntax
+
+The initial release of Markdown support focuses on the Italic syntax. Users can now write text in Italics in their Markdown files, and `txtToWeb` will correctly convert it into HTML. The Italic text can be written by wrapping the desired text segment with either single asterisks `*` or single underscores `_`.
+
+#### Usage Example:
+
+Markdown Input:
+```markdown
+This is an *italic* example.
+And this is another _italic_ example.
+```
+
+Generated HTML Output:
+
+```html
+<p>This is an <i>italic</i> example.</p>
+<p>And this is another <i>italic</i> example.</p>
+```
 
 ### Output
 
