@@ -43,12 +43,12 @@ def extract_title_and_content(file_path):
 
         return title.strip(), content.strip()
 
-def process_file(input_file,stylesheet_url):
+def process_file(input_file,stylesheet_url,lang_attribute):
     output_file = os.path.join('til', os.path.splitext(os.path.basename(input_file))[0] + ".html")
     title, content = extract_title_and_content(input_file)
     with open(output_file, "w") as html_file:
         html_file.write("<!doctype html>\n")
-        html_file.write("<html lang='en'>\n")
+        html_file.write(f"<html lang='{lang_attribute}'>\n")
         html_file.write("<head>\n")
         html_file.write("  <meta charset='utf-8'>\n")
         if title:
@@ -71,7 +71,7 @@ def process_file(input_file,stylesheet_url):
         html_file.write("</body>\n")
         html_file.write("</html>\n")
 
-def process_folder(folder_path,stylesheet_url):
+def process_folder(folder_path,stylesheet_url,lang_attribute):
     if os.path.exists('til'):
         shutil.rmtree('til')
     os.makedirs('til')
@@ -79,7 +79,7 @@ def process_folder(folder_path,stylesheet_url):
         for file in files:
             if file.endswith(".txt") or file.endswith(".md"):
                 file_path = os.path.join(root, file)
-                process_file(file_path,stylesheet_url)
+                process_file(file_path,stylesheet_url,lang_attribute)
 
 def main():    
     parser = argparse.ArgumentParser(description="txtToWeb - Convert Text to Web Content")
@@ -96,18 +96,25 @@ def main():
         "-s",
         help="URL to a CSS stylesheet to be used in the HTML files",
     )
+    parser.add_argument(
+        "--lang",
+        "-l",
+        default="en-CA",  # Default language is Canadian English
+        help="Language code to be used in the lang attribute on the root element",
+    )
 
     args = parser.parse_args()
     input_path = args.input_path
     stylesheet_url = args.stylesheet
+    lang_attribute = args.lang
 
     if os.path.isfile(input_path) and (input_path.endswith(".txt") or input_path.endswith(".md")) :
         if os.path.exists('til'):
             shutil.rmtree('til')
         os.makedirs('til')
-        process_file(input_path,stylesheet_url)
+        process_file(input_path,stylesheet_url,lang_attribute)
     elif os.path.isdir(input_path):
-        process_folder(input_path,stylesheet_url)
+        process_folder(input_path,stylesheet_url,lang_attribute)
     else:
         print("Invalid input path. Please provide a valid file or folder path.")
 
