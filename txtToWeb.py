@@ -104,6 +104,11 @@ def main():
         default="en-CA",  # Default language is Canadian English
         help="Language code to be used in the lang attribute on the root element",
     )
+    parser.add_argument ( 
+        "--config",
+        "-c",
+        help="URL to a TOML config file to be used as a config for the HTML files",
+    )
 
     args = parser.parse_args()
     input_path = args.input_path
