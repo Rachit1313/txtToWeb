@@ -4,6 +4,7 @@ import argparse
 import os
 import shutil
 import re
+import tomli
 
 # Define the tool's version
 VERSION = "txtToWeb v0.1"
@@ -114,6 +115,17 @@ def main():
     input_path = args.input_path
     stylesheet_url = args.stylesheet
     lang_attribute = args.lang
+
+    if args.config:
+        config_file_path = args.config
+        try:
+            with open(config_file_path, "r") as config_file:
+                config_data = tomli.load(config_file)
+                
+                stylesheet_url = config_data.get("stylesheet", stylesheet_url)
+                lang_attribute = config_data.get("lang", lang_attribute)
+        except FileNotFoundError:
+            print(f"Config file not found: {config_file_path}")
 
     if os.path.isfile(input_path) and (input_path.endswith(".txt") or input_path.endswith(".md")) :
         if os.path.exists('til'):
