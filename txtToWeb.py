@@ -121,11 +121,13 @@ def main():
         try:
             with open(config_file_path, "r") as config_file:
                 config_data = tomli.load(config_file)
-                
+
                 stylesheet_url = config_data.get("stylesheet", stylesheet_url)
                 lang_attribute = config_data.get("lang", lang_attribute)
         except FileNotFoundError:
             print(f"Config file not found: {config_file_path}")
+        except tomli.TOMLDecodeError:
+            print(f"Error parsing the config file: {config_file_path}")
 
     if os.path.isfile(input_path) and (input_path.endswith(".txt") or input_path.endswith(".md")) :
         if os.path.exists('til'):
