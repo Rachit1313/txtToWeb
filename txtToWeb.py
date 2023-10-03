@@ -119,7 +119,7 @@ def main():
     if args.config:
         config_file_path = args.config
         try:
-            with open(config_file_path, "r") as config_file:
+            with open(config_file_path, "rb") as config_file:
                 config_data = tomli.load(config_file)
 
                 stylesheet_url = config_data.get("stylesheet", stylesheet_url)
