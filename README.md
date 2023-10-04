@@ -86,9 +86,11 @@ The initial release of Markdown support focuses on the Italic syntax. Users can 
 
 ### Config Example
 
+```
 stylesheet = "../examples/txtToWeb/styles.css"
 
 lang = "en-US"
+```
 
 #### Usage Example:
 
