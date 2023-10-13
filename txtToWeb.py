@@ -3,86 +3,11 @@
 import argparse
 import os
 import shutil
-import re
-import tomli
+from include.config_parser import parse_config
+from include.file_parser import process_file,process_folder
 
 # Define the tool's version
 VERSION = "txtToWeb v0.1"
-
-def md_to_html(content):
-    # Convert Markdown italic syntax to HTML
-    content = re.sub(r"([*_])([^*_]*)(\1)", r"<i>\2</i>", content)
-    # Convert Markdown horizontal rule syntax to HTML <hr> tag
-    content = re.sub(r"(?m)^---\s*$", r"<hr>", content)
-    return content
-
-
-def extract_title_and_content(file_path):
-    with open(file_path, "r") as txt_file:
-        lines = txt_file.readlines()
-
-        title = ""
-        content = ""
-
-        if file_path.endswith('.md'):
-            content = md_to_html("".join(lines))
-        else:
-            # Check if there is at least one line in the file
-            if lines:
-                # Check the first line
-                first_line = lines[0].strip()
-
-                # Check the next two lines if they exist
-                if len(lines) > 2 and not lines[1].strip() and not lines[2].strip():
-                    # If the first line is not empty, consider it a title
-                    if first_line:
-                        title = first_line
-                    # Read the rest of the lines as content
-                    content = "".join(lines[3:])
-                else:
-                    content = "".join(lines)
-            else:
-                pass
-
-        return title.strip(), content.strip()
-
-def process_file(input_file,stylesheet_url,lang_attribute):
-    output_file = os.path.join('til', os.path.splitext(os.path.basename(input_file))[0] + ".html")
-    title, content = extract_title_and_content(input_file)
-    with open(output_file, "w") as html_file:
-        html_file.write("<!doctype html>\n")
-        html_file.write(f"<html lang='{lang_attribute}'>\n")
-        html_file.write("<head>\n")
-        html_file.write("  <meta charset='utf-8'>\n")
-        if title:
-            html_file.write(f"  <title>{title}</title>\n")
-        html_file.write("  <meta name='viewport' content='width=device-width, initial-scale=1'>\n")
-        if stylesheet_url:
-            html_file.write(f"  <link rel='stylesheet' type='text/css' href='{stylesheet_url}'>\n")
-        
-        html_file.write("</head>\n")
-        html_file.write("<body>\n")
-        if title:
-            html_file.write(f"  <h1>{title}</h1>\n")
-        paragraphs = re.split(r'\r?\n\r?\n',content)
-
-        if content:
-            for paragraph in paragraphs:
-                if paragraph.strip():  # Check if the paragraph has content
-                    html_file.write(f"  <p>{paragraph}</p>\n")
-
-        html_file.write("</body>\n")
-        html_file.write("</html>\n")
-
-def process_folder(folder_path,stylesheet_url,lang_attribute):
-    if os.path.exists('til'):
-        shutil.rmtree('til')
-    os.makedirs('til')
-    for root, _, files in os.walk(folder_path):
-        for file in files:
-            if file.endswith(".txt") or file.endswith(".md"):
-                file_path = os.path.join(root, file)
-                process_file(file_path,stylesheet_url,lang_attribute)
 
 def main():    
     parser = argparse.ArgumentParser(description="txtToWeb - Convert Text to Web Content")
@@ -117,17 +42,7 @@ def main():
     lang_attribute = args.lang
 
     if args.config:
-        config_file_path = args.config
-        try:
-            with open(config_file_path, "rb") as config_file:
-                config_data = tomli.load(config_file)
-
-                stylesheet_url = config_data.get("stylesheet", stylesheet_url)
-                lang_attribute = config_data.get("lang", lang_attribute)
-        except FileNotFoundError:
-            print(f"Config file not found: {config_file_path}")
-        except tomli.TOMLDecodeError:
-            print(f"Error parsing the config file: {config_file_path}")
+        stylesheet_url, lang_attribute = parse_config(args.config, stylesheet_url, lang_attribute)
 
     if os.path.isfile(input_path) and (input_path.endswith(".txt") or input_path.endswith(".md")) :
         if os.path.exists('til'):
