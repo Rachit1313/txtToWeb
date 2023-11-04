@@ -1,5 +1,6 @@
 import tomli
 
+
 def parse_config(config_file_path, stylesheet_url, lang_attribute):
     try:
         with open(config_file_path, "rb") as config_file:

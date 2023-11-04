@@ -3,6 +3,7 @@ import shutil
 from include.markdown_converter import md_to_html
 from include.html_generator import write_html_file
 
+
 def extract_title_and_content(file_path):
     with open(file_path, "r") as txt_file:
         lines = txt_file.readlines()
@@ -10,7 +11,7 @@ def extract_title_and_content(file_path):
         title = ""
         content = ""
 
-        if file_path.endswith('.md'):
+        if file_path.endswith(".md"):
             content = md_to_html("".join(lines))
         else:
             # Check if there is at least one line in the file
@@ -32,17 +33,21 @@ def extract_title_and_content(file_path):
 
         return title.strip(), content.strip()
 
-def process_file(input_file,stylesheet_url,lang_attribute):
-    output_file = os.path.join('til', os.path.splitext(os.path.basename(input_file))[0] + ".html")
+
+def process_file(input_file, stylesheet_url, lang_attribute):
+    output_file = os.path.join(
+        "til", os.path.splitext(os.path.basename(input_file))[0] + ".html"
+    )
     title, content = extract_title_and_content(input_file)
     write_html_file(title, content, output_file, stylesheet_url, lang_attribute)
 
-def process_folder(folder_path,stylesheet_url,lang_attribute):
-    if os.path.exists('til'):
-        shutil.rmtree('til')
-    os.makedirs('til')
+
+def process_folder(folder_path, stylesheet_url, lang_attribute):
+    if os.path.exists("til"):
+        shutil.rmtree("til")
+    os.makedirs("til")
     for root, _, files in os.walk(folder_path):
         for file in files:
             if file.endswith(".txt") or file.endswith(".md"):
                 file_path = os.path.join(root, file)
-                process_file(file_path,stylesheet_url,lang_attribute)
+                process_file(file_path, stylesheet_url, lang_attribute)
