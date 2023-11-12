@@ -2,6 +2,7 @@
 
 import argparse
 import os
+import sys
 import shutil
 from include.config_parser import parse_config
 from include.file_parser import process_file, process_folder
@@ -10,7 +11,7 @@ from include.file_parser import process_file, process_folder
 VERSION = "txtToWeb v0.1"
 
 
-def main():
+def parse_arguments():
     parser = argparse.ArgumentParser(
         description="txtToWeb - Convert Text to Web Content"
     )
@@ -39,7 +40,10 @@ def main():
         help="URL to a TOML config file to be used as a config for the HTML files",
     )
 
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+def handle_arguments(args):
     input_path = args.input_path
     stylesheet_url = args.stylesheet
     lang_attribute = args.lang
@@ -49,6 +53,10 @@ def main():
             args.config, stylesheet_url, lang_attribute
         )
 
+    return input_path, stylesheet_url, lang_attribute
+
+
+def execute_conversion(input_path, stylesheet_url, lang_attribute):
     if os.path.isfile(input_path) and (
         input_path.endswith(".txt") or input_path.endswith(".md")
     ):
@@ -60,6 +68,17 @@ def main():
         process_folder(input_path, stylesheet_url, lang_attribute)
     else:
         print("Invalid input path. Please provide a valid file or folder path.")
+        raise ValueError("Invalid input path")
+
+
+def main():
+    try:
+        args = parse_arguments()
+        input_path, stylesheet_url, lang_attribute = handle_arguments(args)
+        execute_conversion(input_path, stylesheet_url, lang_attribute)
+    except Exception as e:
+        print(f"Error: {e}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
