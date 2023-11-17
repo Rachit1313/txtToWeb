@@ -21,6 +21,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      # You can test your matrix by printing the current Python version
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install tomli
       - name: Run unit tests
         run: python3 test_txtToWeb.py
