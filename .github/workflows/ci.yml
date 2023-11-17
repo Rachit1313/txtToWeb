@@ -25,6 +25,5 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           pip3 install tomli
-          pip3 install re
       - name: Run unit tests
         run: python3 -m unittest discover tests
